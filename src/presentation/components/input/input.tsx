@@ -1,9 +1,8 @@
-/* eslint-disable react/prop-types */
-import React, { useContext } from 'react'
+import React, { useContext, InputHTMLAttributes } from 'react'
 import Styles from './input-styles.scss'
 import Context from '@/presentation/components/contexts/form-context'
 
-type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+type Props = InputHTMLAttributes<HTMLInputElement>
 
 const Footer: React.FC<Props> = (props: Props) => {
   const { errorState } = useContext(Context)
