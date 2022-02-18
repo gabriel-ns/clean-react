@@ -34,7 +34,7 @@ describe('Login Component', () => {
     expect(submitButton.disabled).toBeTruthy()
   })
 
-  test('Should disable submit button on start', () => {
+  test('Should set error state on start', () => {
     const { sut, validationStub } = makeSut()
     const emailStatus = sut.getByTestId('email-status')
     expect(emailStatus.title).toBe(validationStub.errorMessage)
