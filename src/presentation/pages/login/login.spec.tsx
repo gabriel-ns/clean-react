@@ -11,6 +11,7 @@ type SutTypes = {
 
 const makeSut = (): SutTypes => {
   const validationSpy = new ValidationSpy()
+  validationSpy.errorMessage = faker.random.words()
   const sut = render(<Login validation={ validationSpy } />)
   return {
     sut,
@@ -34,9 +35,9 @@ describe('Login Component', () => {
   })
 
   test('Should disable submit button on start', () => {
-    const { sut } = makeSut()
+    const { sut, validationSpy } = makeSut()
     const emailStatus = sut.getByTestId('email-status')
-    expect(emailStatus.title).toBe('Campo Obrigatório')
+    expect(emailStatus.title).toBe(validationSpy.errorMessage)
     expect(emailStatus.textContent).toBe('🔴')
 
     const passwordStatus = sut.getByTestId('password-status')
@@ -60,5 +61,17 @@ describe('Login Component', () => {
     fireEvent.input(passwordInput, { target: { value: password } })
     expect(validationSpy.fieldName).toBe('password')
     expect(validationSpy.fieldValue).toBe(password)
+  })
+
+  test('Should show email error if Validation fails', () => {
+    const { sut, validationSpy } = makeSut()
+    const errorMessage = faker.random.words()
+    validationSpy.errorMessage = errorMessage
+    const emailInput = sut.getByTestId('email')
+    const email = faker.internet.email()
+    fireEvent.input(emailInput, { target: { value: email } })
+    const emailStatus = sut.getByTestId('email-status')
+    expect(emailStatus.title).toBe(errorMessage)
+    expect(emailStatus.textContent).toBe('🔴')
   })
 })
