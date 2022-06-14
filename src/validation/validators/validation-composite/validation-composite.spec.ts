@@ -3,14 +3,15 @@ import { ValidationComposite } from './validation-composite'
 
 describe('ValidationComposite', () => {
   test('Should return error fif any validation fails', () => {
-    const fieldValidationSpy = new FieldValidationSpy('any_field')
+    const fieldValidationSpy1 = new FieldValidationSpy('any_field')
     const fieldValidationSpy2 = new FieldValidationSpy('any_field')
-    fieldValidationSpy2.error = new Error('any_error')
+    fieldValidationSpy1.error = new Error('first_error')
+    fieldValidationSpy2.error = new Error('second_error')
     const sut = new ValidationComposite([
-      fieldValidationSpy,
+      fieldValidationSpy1,
       fieldValidationSpy2
     ])
     const error = sut.validate('any_field', 'any_value')
-    expect(error).toBe('any_error')
+    expect(error).toBe('first_error')
   })
 })
