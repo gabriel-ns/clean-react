@@ -1,28 +1,35 @@
 import { RequiredFieldValidation, EmailValidation, MinLengthValidation } from '@/validation/validators'
 import { ValidationBuilder as sut } from './validation-builder'
+import faker from 'faker'
 
 describe('ValidationBuilder', () => {
   test('Should return RequiredFieldValidation', () => {
-    const validations = sut.field('any_field').required().build()
-    expect(validations).toEqual([new RequiredFieldValidation('any_field')])
+    const fieldName = faker.database.column()
+    const validations = sut.field(fieldName).required().build()
+    expect(validations).toEqual([new RequiredFieldValidation(fieldName)])
   })
 
   test('Should return EmailValidation', () => {
-    const validations = sut.field('any_field').email().build()
-    expect(validations).toEqual([new EmailValidation('any_field')])
+    const fieldName = faker.database.column()
+    const validations = sut.field(fieldName).email().build()
+    expect(validations).toEqual([new EmailValidation(fieldName)])
   })
 
   test('Should return MinLengthValidation', () => {
-    const validations = sut.field('any_field').minLength(5).build()
-    expect(validations).toEqual([new MinLengthValidation('any_field', 5)])
+    const fieldName = faker.database.column()
+    const length = faker.random.number()
+    const validations = sut.field(fieldName).minLength(length).build()
+    expect(validations).toEqual([new MinLengthValidation(fieldName, length)])
   })
 
   test('Should return a list of validations', () => {
-    const validations = sut.field('any_field').required().email().minLength(5).build()
+    const fieldName = faker.database.column()
+    const length = faker.random.number()
+    const validations = sut.field(fieldName).required().email().minLength(length).build()
     expect(validations).toEqual([
-      new RequiredFieldValidation('any_field'),
-      new EmailValidation('any_field'),
-      new MinLengthValidation('any_field', 5)
+      new RequiredFieldValidation(fieldName),
+      new EmailValidation(fieldName),
+      new MinLengthValidation(fieldName, length)
     ])
   })
 })
