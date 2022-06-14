@@ -1,6 +1,7 @@
 import { InvalidFieldError } from '@/validation/errors'
 import { FieldValidation } from '@/validation/protocols/field-validation'
 
+// TODO: Add interface to handle verification in Infra layer
 export class EmailValidation implements FieldValidation {
   fieldName: string
 
