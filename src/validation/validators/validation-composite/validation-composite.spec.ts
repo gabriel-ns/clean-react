@@ -2,7 +2,7 @@ import { FieldValidationSpy } from '@/validation/test/mock-field-validation'
 import { ValidationComposite } from './validation-composite'
 
 describe('ValidationComposite', () => {
-  test('Should return error fif any validation fails', () => {
+  test('Should return error if any validation fails', () => {
     const fieldValidationSpy1 = new FieldValidationSpy('any_field')
     const fieldValidationSpy2 = new FieldValidationSpy('any_field')
     fieldValidationSpy1.error = new Error('first_error')
