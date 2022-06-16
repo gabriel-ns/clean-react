@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, RenderResult } from '@testing-library/react'
+import { fireEvent, render, RenderResult } from '@testing-library/react'
 import Input from './input'
 import Context from '@/presentation/components/contexts/form-context'
 
@@ -16,5 +16,12 @@ describe('Input Component', () => {
     const { getByTestId } = makeSut()
     const input = getByTestId('field') as HTMLInputElement
     expect(input.readOnly).toBeTruthy()
+  })
+
+  test('Should remove readOnly on focus', () => {
+    const { getByTestId } = makeSut()
+    const input = getByTestId('field') as HTMLInputElement
+    fireEvent.focus(input)
+    expect(input.readOnly).toBeFalsy()
   })
 })
