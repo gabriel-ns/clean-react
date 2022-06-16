@@ -7,6 +7,7 @@ import 'jest-localstorage-mock'
 import { render, RenderResult, fireEvent, cleanup, waitFor } from '@testing-library/react'
 import { ValidationStub, AuthenticationSpy } from '@/presentation/test/'
 import { InvalidCredentialsError } from '@/domain/errors'
+import { act } from 'react-dom/test-utils'
 
 type SutTypes = {
   sut: RenderResult
@@ -35,11 +36,13 @@ const makeSut = (params?: SutParams): SutTypes => {
 }
 
 const simulateValidSubmit = async (sut: RenderResult, email = faker.internet.email(), password = faker.internet.password()): Promise<void> => {
-  populateEmailField(sut, email)
-  populatePasswordField(sut, password)
-  const form = sut.getByTestId('form')
-  fireEvent.submit(form)
-  await waitFor(() => form)
+  await act(async () => {
+    populateEmailField(sut, email)
+    populatePasswordField(sut, password)
+    const form = sut.getByTestId('form')
+    fireEvent.submit(form)
+    await waitFor(() => form)
+  })
 }
 
 const populateEmailField = (sut: RenderResult, email = faker.internet.email()): void => {
