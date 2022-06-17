@@ -6,4 +6,4 @@ jobs:
       - checkout
       - run: |
           npm install
-          npm run test:ci
+          npm run test:coveralls
