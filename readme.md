@@ -1,12 +1,10 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/gabriel-ns/clean-react/tree/master.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/gabriel-ns/clean-react/tree/master)
+[![Coverage Status](https://coveralls.io/repos/github/gabriel-ns/clean-react/badge.svg?branch=master)](https://coveralls.io/github/gabriel-ns/clean-react?branch=master)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
 [![Open Source](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/)
 
 # **Clean Node API**
-
-[![alt text](./public/img/logo-course.png "Link para o treinamento")](https://www.udemy.com/course/tdd-com-mango/?referralCode=B53CE5CA2B9AFA5A6FA1)
-
----
 
 ## [**Link para o curso completo**](https://www.udemy.com/course/tdd-com-mango/?referralCode=B53CE5CA2B9AFA5A6FA1)
 
