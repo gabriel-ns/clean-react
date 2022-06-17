@@ -64,7 +64,7 @@ O objetivo do treinamento é mostrar como criar uma API com uma arquitetura bem 
 * Docker
 * Jest
 * MongoDb
-* Travis CI
+* Circle CI
 * Swagger
 * Bcrypt
 * JsonWebToken
