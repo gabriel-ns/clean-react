@@ -6,10 +6,12 @@ import Signup from './signup'
 import faker from 'faker'
 import { Helper, ValidationStub } from '@/presentation/test'
 import { act } from 'react-dom/test-utils'
+import { AddAccountSpy } from '@/presentation/test/mock-add-account'
 
 type SutTypes = {
   sut: RenderResult
   history: MemoryHistory
+  addAccountSpy: AddAccountSpy
 }
 
 type SutParams = {
@@ -18,16 +20,21 @@ type SutParams = {
 
 const makeSut = (params?: SutParams): SutTypes => {
   const history = createMemoryHistory({ initialEntries: ['/signup'] })
+  const addAccountSpy = new AddAccountSpy()
   const validationStub = new ValidationStub()
   validationStub.errorMessage = params?.validationError
 
   const sut = render(
     <Router navigator={ history } location={ history.location }>
-      <Signup validation={validationStub} />
+      <Signup
+        validation={validationStub}
+        addAccount={addAccountSpy}
+      />
     </Router>)
   return {
     sut,
-    history
+    history,
+    addAccountSpy
   }
 }
 
@@ -131,5 +138,19 @@ describe('Signup Component', () => {
     const { sut } = makeSut()
     await simulateValidSubmit(sut)
     Helper.testElementExists(sut, 'spinner')
+  })
+
+  test('Should call AddAccount with correct values', async () => {
+    const { sut, addAccountSpy } = makeSut()
+    const password = faker.internet.password()
+    const email = faker.internet.email()
+    const name = faker.name.findName()
+    await simulateValidSubmit(sut, name, email, password)
+    expect(addAccountSpy.params).toEqual({
+      name,
+      email,
+      password,
+      passwordConfirmation: password
+    })
   })
 })
