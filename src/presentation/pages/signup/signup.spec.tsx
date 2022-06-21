@@ -46,7 +46,7 @@ describe('Signup Component', () => {
   test('Should set error state on start', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
-    Helper.testStatusForField(sut, 'email-status', 'Campo Obrigatório')
+    Helper.testStatusForField(sut, 'email-status', validationError)
     Helper.testStatusForField(sut, 'name-status', validationError)
     Helper.testStatusForField(sut, 'password-status', 'Campo Obrigatório')
     Helper.testStatusForField(sut, 'passwordConfirmation-status', 'Campo Obrigatório')
@@ -57,5 +57,12 @@ describe('Signup Component', () => {
     const { sut } = makeSut({ validationError })
     Helper.populateField(sut, 'name')
     Helper.testStatusForField(sut, 'name-status', validationError)
+  })
+
+  test('Should show email error if Validation fails', () => {
+    const validationError = faker.random.words()
+    const { sut } = makeSut({ validationError })
+    Helper.populateField(sut, 'email')
+    Helper.testStatusForField(sut, 'email-status', validationError)
   })
 })
