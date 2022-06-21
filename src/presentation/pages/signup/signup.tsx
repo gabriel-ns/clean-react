@@ -20,8 +20,7 @@ const Signup: React.FC<Props> = ({ validation }: Props) => {
     passwordConfirmationError: '',
     nameError: '',
     passwordError: '',
-    mainError: '',
-    buttonDisabled: true
+    mainError: ''
   })
 
   useEffect(() => {
@@ -30,17 +29,10 @@ const Signup: React.FC<Props> = ({ validation }: Props) => {
       nameError: validation.validate('name', state.name),
       passwordError: validation.validate('password', state.password),
       passwordConfirmationError: validation.validate('passwordConfirmation', state.passwordConfirmationError),
-      emailError: validation.validate('email', state.email),
-      buttonDisabled: shouldDisableButton()
+      emailError: validation.validate('email', state.email)
     })
   }, [state.name, state.email, state.password, state.passwordConfirmation])
 
-  const shouldDisableButton = (): boolean => {
-    const { emailError, nameError, passwordConfirmationError, passwordError } = state
-    return (
-      !!emailError || !!nameError || !!passwordConfirmationError || !!passwordError
-    )
-  }
   return (
     <div className={Styles.signup}>
       <LoginHeader />
