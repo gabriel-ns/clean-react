@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, RenderResult } from '@testing-library/react'
+import { cleanup, render, RenderResult } from '@testing-library/react'
 import { createMemoryHistory, MemoryHistory } from 'history'
 import React from 'react'
 import { Router } from 'react-router-dom'
@@ -30,11 +30,6 @@ const makeSut = (params?: SutParams): SutTypes => {
   }
 }
 
-const populateField = (sut: RenderResult, fieldTestId: string, value = faker.random.word()): void => {
-  const input = sut.getByTestId(fieldTestId)
-  fireEvent.input(input, { target: { value } })
-}
-
 describe('Signup Component', () => {
   afterEach(cleanup)
 
@@ -60,7 +55,7 @@ describe('Signup Component', () => {
   test('Should show name error if Validation fails', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
-    populateField(sut, 'name')
+    Helper.populateField(sut, 'name')
     Helper.testStatusForField(sut, 'name-status', validationError)
   })
 })
