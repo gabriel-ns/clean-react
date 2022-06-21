@@ -39,7 +39,8 @@ describe('Signup Component', () => {
   })
 
   test('Should disable submit button on start', () => {
-    const { sut } = makeSut()
+    const validationError = faker.random.words()
+    const { sut } = makeSut({ validationError })
     Helper.testButtonDisabled(sut, 'submit', true)
   })
 
@@ -102,5 +103,14 @@ describe('Signup Component', () => {
     const { sut } = makeSut()
     Helper.populateField(sut, 'passwordConfirmation')
     Helper.testStatusForField(sut, 'passwordConfirmation-status')
+  })
+
+  test('Should enable submit button if form is valid', () => {
+    const { sut } = makeSut()
+    Helper.populateField(sut, 'name')
+    Helper.populateField(sut, 'email')
+    Helper.populateField(sut, 'password')
+    Helper.populateField(sut, 'passwordConfirmation')
+    Helper.testButtonDisabled(sut, 'submit', false)
   })
 })
