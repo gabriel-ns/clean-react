@@ -4,8 +4,8 @@ import { FieldValidation } from '@/validation/protocols/field-validation'
 // TODO: Add interface to handle verification in Infra layer
 export class EmailValidation implements FieldValidation {
   constructor (readonly fieldName: string) {}
-  validate (value: string): Error {
+  validate (input: object): Error {
     const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-    return (!value || emailRegex.test(value)) ? null : new InvalidFieldError()
+    return (!input[this.fieldName] || emailRegex.test(input[this.fieldName])) ? null : new InvalidFieldError()
   }
 }
