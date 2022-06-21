@@ -20,7 +20,8 @@ const Signup: React.FC<Props> = ({ validation }: Props) => {
     passwordConfirmationError: '',
     nameError: '',
     passwordError: '',
-    mainError: ''
+    mainError: '',
+    buttonDisabled: true
   })
 
   useEffect(() => {
@@ -29,10 +30,17 @@ const Signup: React.FC<Props> = ({ validation }: Props) => {
       nameError: validation.validate('name', state.name),
       passwordError: validation.validate('password', state.password),
       passwordConfirmationError: validation.validate('passwordConfirmation', state.passwordConfirmationError),
-      emailError: validation.validate('email', state.email)
+      emailError: validation.validate('email', state.email),
+      buttonDisabled: shouldDisableButton()
     })
   }, [state.name, state.email, state.password, state.passwordConfirmation])
 
+  const shouldDisableButton = (): boolean => {
+    const { emailError, nameError, passwordConfirmationError, passwordError } = state
+    return (
+      !!emailError || !!nameError || !!passwordConfirmationError || !!passwordError
+    )
+  }
   return (
     <div className={Styles.signup}>
       <LoginHeader />
@@ -43,7 +51,7 @@ const Signup: React.FC<Props> = ({ validation }: Props) => {
           <Input type="email" name="email" placeholder="Digite seu email" />
           <Input type="password" name="password" placeholder="Digite sua senha" />
           <Input type="password" name="passwordConfirmation" placeholder="Repita sua senha" />
-          <button data-testid='submit' className={Styles.submit} disabled type="submit">Entrar</button>
+          <button data-testid='submit' className={Styles.submit} disabled={ !!state.emailError || !!state.nameError || !!state.passwordConfirmationError || !!state.passwordError } type="submit">Entrar</button>
           <Link to="/login" className={Styles.link}>Voltar para o login</Link>
           <FormStatus />
         </form>
