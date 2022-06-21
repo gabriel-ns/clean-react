@@ -31,6 +31,12 @@ const testButtonDisabled = (sut: RenderResult, fieldTestId: string, isDisabled: 
   expect(button.disabled).toBe(isDisabled)
 }
 
+const testStatusForField = (sut: RenderResult, fieldName: string, validationError?: string): void => {
+  const fieldStatus = sut.getByTestId(`${fieldName}`)
+  expect(fieldStatus.title).toBe(validationError || 'Tudo certo!')
+  expect(fieldStatus.textContent).toBe(validationError ? '🔴' : '🟢')
+}
+
 describe('Signup Component', () => {
   test('Should not render spinner and error on start', () => {
     const { sut } = makeSut()
@@ -40,5 +46,14 @@ describe('Signup Component', () => {
   test('Should disable submit button on start', () => {
     const { sut } = makeSut()
     testButtonDisabled(sut, 'submit', true)
+  })
+
+  test('Should set error state on start', () => {
+    const validationError = 'Campo Obrigatório'
+    const { sut } = makeSut()
+    testStatusForField(sut, 'email-status', validationError)
+    testStatusForField(sut, 'name-status', validationError)
+    testStatusForField(sut, 'password-status', validationError)
+    testStatusForField(sut, 'passwordConfirmation-status', validationError)
   })
 })
