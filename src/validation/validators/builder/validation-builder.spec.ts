@@ -17,7 +17,7 @@ describe('ValidationBuilder', () => {
 
   test('Should return MinLengthValidation', () => {
     const fieldName = faker.database.column()
-    const length = faker.random.number()
+    const length = faker.datatype.number()
     const validations = sut.field(fieldName).minLength(length).build()
     expect(validations).toEqual([new MinLengthValidation(fieldName, length)])
   })
@@ -31,7 +31,7 @@ describe('ValidationBuilder', () => {
 
   test('Should return a list of validations', () => {
     const fieldName = faker.database.column()
-    const length = faker.random.number()
+    const length = faker.datatype.number()
     const validations = sut.field(fieldName).required().email().minLength(length).build()
     expect(validations).toEqual([
       new RequiredFieldValidation(fieldName),
