@@ -94,4 +94,21 @@ describe('Login', () => {
       assert.equal(window.localStorage.getItem('access-token'), accessToken)
     })
   })
+
+  it('Should present UnexpectedError on 400', () => {
+    cy.intercept('POST', /login/, {
+      delay: 100,
+      statusCode: 400,
+      body: { error: faker.random.words() }
+    })
+
+    cy.getByTestId('email').focus().type(faker.internet.email())
+    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
+    cy.getByTestId('submit').click()
+
+    cy.getByTestId('error-wrap')
+      .getByTestId('spinner').should('not.exist')
+      .getByTestId('main-error').should('contain.text', 'Algo deu errado. Tente novamente mais tarde')
+    cy.url().should('equal', `${baseUrl}/login`)
+  })
 })
