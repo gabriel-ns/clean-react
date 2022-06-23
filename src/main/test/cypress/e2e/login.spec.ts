@@ -131,7 +131,7 @@ describe('Login', () => {
 
   it('Should prevent multiple submits', () => {
     cy.intercept('POST', /login/, {
-      delay: 500,
+      delay: 100,
       statusCode: 200,
       body: { [faker.random.word()]: faker.random.words() }
     }).as('request')
@@ -141,5 +141,29 @@ describe('Login', () => {
     cy.getByTestId('submit').click()
     cy.getByTestId('submit').click()
     cy.get('@request.all').should('have.length', 1)
+  })
+
+  it('Should submit form by pressing enter when password is in focus', () => {
+    cy.intercept('POST', /login/, {
+      delay: 100,
+      statusCode: 200,
+      body: { [faker.random.word()]: faker.random.words() }
+    }).as('login')
+
+    cy.getByTestId('email').focus().type(faker.internet.email())
+    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5)).type('{enter}')
+    cy.get('@login.all').should('have.length', 1)
+  })
+
+  it('Should submit form by pressing enter when password is in focus', () => {
+    cy.intercept('POST', /login/, {
+      delay: 100,
+      statusCode: 200,
+      body: { [faker.random.word()]: faker.random.words() }
+    }).as('login')
+
+    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
+    cy.getByTestId('email').focus().type(faker.internet.email()).type('{enter}')
+    cy.get('@login.all').should('have.length', 1)
   })
 })
