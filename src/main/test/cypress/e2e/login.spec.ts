@@ -166,4 +166,15 @@ describe('Login', () => {
     cy.getByTestId('email').focus().type(faker.internet.email()).type('{enter}')
     cy.get('@login.all').should('have.length', 1)
   })
+
+  it('Should not call submit if form is invalid', () => {
+    cy.intercept('POST', /login/, {
+      delay: 100,
+      statusCode: 200,
+      body: { [faker.random.word()]: faker.random.words() }
+    }).as('login')
+
+    cy.getByTestId('email').focus().type(faker.internet.email()).type('{enter}')
+    cy.get('@login.all').should('have.length', 0)
+  })
 })
