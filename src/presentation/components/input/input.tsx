@@ -10,8 +10,13 @@ const Footer: React.FC<Props> = (props: Props) => {
   const error = state[`${props.name}Error`]
 
   return (
-    <div className={Styles.inputWrap}>
+    <div
+      className={Styles.inputWrap}
+      data-testid={`${props.name}-wrap`}
+      data-status={error ? 'invalid' : 'valid'}
+    >
       <input
+        title={ error }
         {...props}
         ref={ inputRef }
         placeholder=" "
@@ -20,15 +25,13 @@ const Footer: React.FC<Props> = (props: Props) => {
         onFocus={ e => { e.target.readOnly = false } }
         onChange={e => { setState({ ...state, [e.target.name]: e.target.value }) }}
       />
-      <label onClick={() => { inputRef.current.focus() }}>
+      <label
+        onClick={() => { inputRef.current.focus() }}
+        title={ error }
+        data-testid={`${props.name}-label`}
+      >
         { props.placeholder }
       </label>
-      <span
-      data-testid={`${props.name}-status`}
-      title={ error || 'Tudo certo!' }
-      className={ Styles.status }>
-        { error ? '🔴' : '🟢' }
-      </span>
     </div>
   )
 }

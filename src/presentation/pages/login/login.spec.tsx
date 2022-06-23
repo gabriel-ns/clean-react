@@ -69,34 +69,34 @@ describe('Login Component', () => {
   test('Should set error state on start', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
-    Helper.testStatusForField(sut, 'email-status', validationError)
-    Helper.testStatusForField(sut, 'password-status', validationError)
+    Helper.testStatusForField(sut, 'email', validationError)
+    Helper.testStatusForField(sut, 'password', validationError)
   })
 
   test('Should show email error if Validation fails', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
     Helper.populateField(sut, 'email')
-    Helper.testStatusForField(sut, 'email-status', validationError)
+    Helper.testStatusForField(sut, 'email', validationError)
   })
 
   test('Should show password error if Validation fails', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
     Helper.populateField(sut, 'password')
-    Helper.testStatusForField(sut, 'password-status', validationError)
+    Helper.testStatusForField(sut, 'password', validationError)
   })
 
   test('Should show valid email state if Validation succeeds', () => {
     const { sut } = makeSut()
     Helper.populateField(sut, 'email')
-    Helper.testStatusForField(sut, 'email-status')
+    Helper.testStatusForField(sut, 'email')
   })
 
   test('Should show valid password state if Validation succeeds', () => {
     const { sut } = makeSut()
     Helper.populateField(sut, 'password')
-    Helper.testStatusForField(sut, 'password-status')
+    Helper.testStatusForField(sut, 'password')
   })
 
   test('Should enable submit button if form is valid', () => {
