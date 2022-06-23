@@ -128,4 +128,18 @@ describe('Login', () => {
       .getByTestId('main-error').should('contain.text', 'Algo deu errado. Tente novamente mais tarde')
     cy.url().should('equal', `${baseUrl}/login`)
   })
+
+  it('Should prevent multiple submits', () => {
+    cy.intercept('POST', /login/, {
+      delay: 500,
+      statusCode: 200,
+      body: { [faker.random.word()]: faker.random.words() }
+    }).as('request')
+
+    cy.getByTestId('email').focus().type(faker.internet.email())
+    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
+    cy.getByTestId('submit').click()
+    cy.getByTestId('submit').click()
+    cy.get('@request.all').should('have.length', 1)
+  })
 })
