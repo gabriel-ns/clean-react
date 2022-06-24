@@ -138,4 +138,12 @@ describe('Signup', () => {
     cy.getByTestId('password').type('{enter}').wait('@request')
     FormHelper.testHttpCallsCount(1)
   })
+
+  it('Should submit form by pressing enter when email is in focus', () => {
+    Http.mockOk()
+
+    fillForm()
+    cy.getByTestId('email').type('{enter}').wait('@request')
+    FormHelper.testHttpCallsCount(1)
+  })
 })
