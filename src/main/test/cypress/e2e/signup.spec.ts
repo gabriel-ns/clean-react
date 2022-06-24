@@ -78,4 +78,16 @@ describe('Login', () => {
     FormHelper.testMainError('Esse email já está em uso')
     FormHelper.testUrl('/signup')
   })
+
+  it('Should save accessToken if valid form is provided', () => {
+    const accessToken = faker.datatype.uuid()
+    Http.mockOk({ accessToken })
+
+    simulateValidSubmit()
+    cy.getByTestId('error-wrap')
+      .getByTestId('main-error').should('not.exist')
+
+    FormHelper.testUrl('/')
+    FormHelper.testLocalStorageItem('access-token', accessToken)
+  })
 })
