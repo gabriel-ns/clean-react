@@ -40,7 +40,7 @@ describe('Login', () => {
     FormHelper.testInputStatus('email')
 
     cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
-    FormHelper.testInputStatus('email')
+    FormHelper.testInputStatus('password')
 
     cy.getByTestId('submit').should('not.have.attr', 'disabled')
   })
