@@ -2,9 +2,13 @@ import faker from 'faker'
 import * as FormHelper from '../support/form-helper'
 import * as Http from '../support/login-mocks'
 
-const simulateValidSubmit = (): void => {
+const fillForm = (): void => {
   cy.getByTestId('email').focus().type(faker.internet.email())
   cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
+}
+
+const simulateValidSubmit = (): void => {
+  fillForm()
   cy.getByTestId('submit').click()
 }
 
@@ -92,8 +96,7 @@ describe('Login', () => {
   it('Should prevent multiple submits', () => {
     Http.mockOk()
 
-    cy.getByTestId('email').focus().type(faker.internet.email())
-    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
+    fillForm()
     cy.getByTestId('submit').click().click()
     FormHelper.testHttpCallsCount(1)
   })
@@ -101,16 +104,16 @@ describe('Login', () => {
   it('Should submit form by pressing enter when password is in focus', () => {
     Http.mockOk()
 
-    cy.getByTestId('email').focus().type(faker.internet.email())
-    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5)).type('{enter}')
+    fillForm()
+    cy.getByTestId('password').type('{enter}')
     FormHelper.testHttpCallsCount(1)
   })
 
   it('Should submit form by pressing enter when email is in focus', () => {
     Http.mockOk()
 
-    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
-    cy.getByTestId('email').focus().type(faker.internet.email()).type('{enter}').wait('@request')
+    fillForm()
+    cy.getByTestId('email').type('{enter}').wait('@request')
     FormHelper.testUrl('/')
     FormHelper.testHttpCallsCount(1)
   })

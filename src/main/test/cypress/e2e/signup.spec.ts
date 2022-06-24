@@ -118,11 +118,7 @@ describe('Signup', () => {
   it('Should prevent multiple submits', () => {
     Http.mockOk()
 
-    cy.getByTestId('name').focus().type(faker.name.findName())
-    cy.getByTestId('email').focus().type(faker.internet.email())
-    const password = faker.random.alphaNumeric(5)
-    cy.getByTestId('password').focus().type(password)
-    cy.getByTestId('passwordConfirmation').focus().type(password)
+    fillForm()
     cy.getByTestId('submit').click().click()
     FormHelper.testHttpCallsCount(1)
   })
