@@ -2,12 +2,16 @@ import faker from 'faker'
 import * as FormHelper from '../support/form-helper'
 import * as Http from '../support/signup-mocks'
 
-const simulateValidSubmit = (): void => {
+const fillForm = (): void => {
   cy.getByTestId('name').focus().type(faker.name.findName())
   cy.getByTestId('email').focus().type(faker.internet.email())
   const password = faker.random.alphaNumeric(5)
   cy.getByTestId('password').focus().type(password)
   cy.getByTestId('passwordConfirmation').focus().type(password)
+}
+
+const simulateValidSubmit = (): void => {
+  fillForm()
   cy.getByTestId('submit').click()
 }
 
@@ -120,6 +124,14 @@ describe('Signup', () => {
     cy.getByTestId('password').focus().type(password)
     cy.getByTestId('passwordConfirmation').focus().type(password)
     cy.getByTestId('submit').click().click()
+    FormHelper.testHttpCallsCount(1)
+  })
+
+  it('Should submit form by pressing enter when password confirmation is in focus', () => {
+    Http.mockOk()
+
+    fillForm()
+    cy.getByTestId('passwordConfirmation').type('{enter}')
     FormHelper.testHttpCallsCount(1)
   })
 })
