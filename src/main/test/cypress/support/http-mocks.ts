@@ -17,6 +17,14 @@ export const mockUnexpectedError = (url: RegExp, method: Method): void => {
   }).as('request')
 }
 
+export const mockForbiddenError = (url: RegExp, method: Method): void => {
+  cy.intercept(method, url, {
+    delay: 100,
+    statusCode: 403,
+    body: { error: faker.random.words() }
+  }).as('request')
+}
+
 export const mockOk = (url: RegExp, method: Method, response: any): void => {
   cy.intercept(method, url, {
     delay: 100,
