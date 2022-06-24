@@ -100,4 +100,14 @@ describe('Signup', () => {
 
     FormHelper.testUrl('/signup')
   })
+
+  it('Should present UnexpectedError if invalid data is returned', () => {
+    Http.mockOk({ [faker.random.word()]: faker.random.words() })
+
+    simulateValidSubmit()
+
+    FormHelper.testMainError('Algo deu errado. Tente novamente mais tarde')
+
+    FormHelper.testUrl('/signup')
+  })
 })
