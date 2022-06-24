@@ -130,4 +130,12 @@ describe('Signup', () => {
     cy.getByTestId('passwordConfirmation').type('{enter}')
     FormHelper.testHttpCallsCount(1)
   })
+
+  it('Should submit form by pressing enter when password is in focus', () => {
+    Http.mockOk()
+
+    fillForm()
+    cy.getByTestId('password').type('{enter}').wait('@request')
+    FormHelper.testHttpCallsCount(1)
+  })
 })
