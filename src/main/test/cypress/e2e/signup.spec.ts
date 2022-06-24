@@ -90,4 +90,14 @@ describe('Signup', () => {
     FormHelper.testUrl('/')
     FormHelper.testLocalStorageItem('access-token', accessToken)
   })
+
+  it('Should present UnexpectedError on any error code', () => {
+    Http.mockUnexpectedError()
+
+    simulateValidSubmit()
+
+    FormHelper.testMainError('Algo deu errado. Tente novamente mais tarde')
+
+    FormHelper.testUrl('/signup')
+  })
 })
