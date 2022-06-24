@@ -150,7 +150,7 @@ describe('Login', () => {
     cy.intercept('POST', /login/, {
       delay: 100,
       statusCode: 200,
-      body: { [faker.random.word()]: faker.random.words() }
+      body: { accessToken: faker.datatype.uuid() }
     }).as('login')
 
     cy.getByTestId('email').focus().type(faker.internet.email())
@@ -158,15 +158,16 @@ describe('Login', () => {
     cy.get('@login.all').should('have.length', 1)
   })
 
-  it('Should submit form by pressing enter when password is in focus', () => {
+  it('Should submit form by pressing enter when email is in focus', () => {
     cy.intercept('POST', /login/, {
       delay: 100,
       statusCode: 200,
-      body: { [faker.random.word()]: faker.random.words() }
+      body: { accessToken: faker.datatype.uuid() }
     }).as('login')
 
     cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
-    cy.getByTestId('email').focus().type(faker.internet.email()).type('{enter}')
+    cy.getByTestId('email').focus().type(faker.internet.email()).type('{enter}').wait('@login')
+    cy.url().should('equal', `${baseUrl}/`)
     cy.get('@login.all').should('have.length', 1)
   })
 
