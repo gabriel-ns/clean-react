@@ -146,4 +146,12 @@ describe('Signup', () => {
     cy.getByTestId('email').type('{enter}').wait('@request')
     FormHelper.testHttpCallsCount(1)
   })
+
+  it('Should submit form by pressing enter when name is in focus', () => {
+    Http.mockOk()
+
+    fillForm()
+    cy.getByTestId('name').type('{enter}').wait('@request')
+    FormHelper.testHttpCallsCount(1)
+  })
 })
