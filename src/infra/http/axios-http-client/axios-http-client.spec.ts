@@ -17,29 +17,31 @@ const makeSut = (): SutTypes => {
 }
 
 describe('AxiosHttpClient', () => {
-  test('Should call Axios with correct values', async () => {
-    const postRequest = mockPostRequest()
-    const { sut, mockedAxios } = makeSut()
-    await sut.post(postRequest)
-    expect(mockedAxios.post).toHaveBeenCalledWith(postRequest.url, postRequest.body)
-  })
-
-  test('Should return the correct status code and body', async () => {
-    const { sut, mockedAxios } = makeSut()
-    const httpResponse = await sut.post(mockPostRequest())
-    const axiosResponse = await mockedAxios.post.mock.results[0].value
-    await expect(httpResponse).toEqual({
-      body: axiosResponse.data,
-      statusCode: axiosResponse.status
+  describe('AxiosHttpClient', () => {
+    test('Should call Axios with correct values', async () => {
+      const postRequest = mockPostRequest()
+      const { sut, mockedAxios } = makeSut()
+      await sut.post(postRequest)
+      expect(mockedAxios.post).toHaveBeenCalledWith(postRequest.url, postRequest.body)
     })
-  })
 
-  test('Should return the correct status code and body on failure', () => {
-    const { sut, mockedAxios } = makeSut()
-    mockedAxios.post.mockRejectedValueOnce({
-      response: mockHttpResponse()
+    test('Should return the correct status code and body', async () => {
+      const { sut, mockedAxios } = makeSut()
+      const httpResponse = await sut.post(mockPostRequest())
+      const axiosResponse = await mockedAxios.post.mock.results[0].value
+      await expect(httpResponse).toEqual({
+        body: axiosResponse.data,
+        statusCode: axiosResponse.status
+      })
     })
-    const promise = sut.post(mockPostRequest())
-    expect(promise).toEqual(mockedAxios.post.mock.results[0].value)
+
+    test('Should return the correct status code and body on failure', () => {
+      const { sut, mockedAxios } = makeSut()
+      mockedAxios.post.mockRejectedValueOnce({
+        response: mockHttpResponse()
+      })
+      const promise = sut.post(mockPostRequest())
+      expect(promise).toEqual(mockedAxios.post.mock.results[0].value)
+    })
   })
 })
