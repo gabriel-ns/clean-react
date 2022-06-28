@@ -30,11 +30,9 @@ const SurveyList: React.FC = () => {
       <h2>Enquetes</h2>
       <ul>
         <li><SurveyItem /></li>
-        <li><SurveyItem /></li>
-        <li><SurveyItem /></li>
-        <li><SurveyItem /></li>
-        <li><SurveyItem /></li>
-        <li><SurveyItem /></li>
+        <li></li>
+        <li></li>
+        <li></li>
       </ul>
     </div>
 
