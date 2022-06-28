@@ -2,12 +2,9 @@ import React, { memo } from 'react'
 import Logo from '../logo/logo'
 import Styles from './login-header-styles.scss'
 
-type Props = React.HTMLAttributes<HTMLElement>
-
-const LoginHeader: React.FC<Props> = (props: Props) => {
+const LoginHeader: React.FC = () => {
   return (
-    // eslint-disable-next-line react/prop-types
-    <header {...props} className={[Styles.headerWrap, props.className].join(' ')}>
+    <header className={Styles.headerWrap}>
       <Logo />
       <h1>4Dev - Enquetes para programadores</h1>
     </header>
