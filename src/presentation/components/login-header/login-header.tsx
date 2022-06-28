@@ -7,7 +7,7 @@ type Props = React.HTMLAttributes<HTMLElement>
 const LoginHeader: React.FC<Props> = (props: Props) => {
   return (
     // eslint-disable-next-line react/prop-types
-    <header {...props} className={[Styles.header, props.className].join(' ')}>
+    <header {...props} className={[Styles.headerWrap, props.className].join(' ')}>
       <Logo />
       <h1>4Dev - Enquetes para programadores</h1>
     </header>

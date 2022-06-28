@@ -47,14 +47,14 @@
         border-radius: 8px 8px 0 0;
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        
         flex-grow: 1;
         background-repeat: no-repeat;
         background-image: 
           linear-gradient(to right, rgba($primaryLight, 0.1), rgba($primaryLight, 0.1)),
           linear-gradient(to right, rgba($white, 0.1), rgba($white, 0.1));
         background-position-x: 0 0, 50 0;
-        background-size: 37px 100%, 100% 100%;
+        background-size: 42px 100%, 100% 100%;
         position: relative;
 
         .iconWrap {
@@ -73,7 +73,7 @@
           align-items: center;
           justify-content: center;
           align-self: center;
-          width: 50px;
+          width: 60px;
           height: 100px;
           flex-shrink: 0;
           
@@ -85,10 +85,6 @@
           .month {
               text-transform: lowercase;
               margin: 0 0 5px 0;
-            }
-
-          .year {
-
             }
           }
           
@@ -113,6 +109,20 @@
             
           }
         } 
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .surveyListWrap {  
+    .contentWrap {
+      ul {
+        flex-direction: column;
+        li {
+          min-height: 250px;
+          flex-basis: 100%;
+        }
       }
     }
   }
