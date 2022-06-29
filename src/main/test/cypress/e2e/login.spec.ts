@@ -1,6 +1,7 @@
 import faker from 'faker'
 import * as FormHelper from '../support/form-helper'
 import * as Http from '../support/login-mocks'
+import { mockAccountModel } from '../../../../domain/test/mock-account'
 
 const fillForm = (): void => {
   cy.getByTestId('email').focus().type(faker.internet.email())
@@ -61,16 +62,16 @@ describe('Login', () => {
     FormHelper.testUrl('/login')
   })
 
-  it('Should save accessToken if valid credentials are provided', () => {
-    const accessToken = faker.datatype.uuid()
-    Http.mockOk({ accessToken })
+  it('Should update current account if valid credentials are provided', () => {
+    const account = mockAccountModel()
+    Http.mockOk(account)
 
     simulateValidSubmit()
     cy.getByTestId('error-wrap')
       .getByTestId('main-error').should('not.exist')
 
     FormHelper.testUrl('/')
-    FormHelper.testLocalStorageItem('access-token', accessToken)
+    FormHelper.testLocalStorageItem('account', JSON.stringify(account))
   })
 
   it('Should present UnexpectedError on any error code', () => {

@@ -1,4 +1,5 @@
 import faker from 'faker'
+import { mockAccountModel } from '../../../../domain/test/mock-account'
 import * as FormHelper from '../support/form-helper'
 import * as Http from '../support/signup-mocks'
 
@@ -84,15 +85,15 @@ describe('Signup', () => {
   })
 
   it('Should save accessToken if valid form is provided', () => {
-    const accessToken = faker.datatype.uuid()
-    Http.mockOk({ accessToken })
+    const account = mockAccountModel()
+    Http.mockOk(account)
 
     simulateValidSubmit()
     cy.getByTestId('error-wrap')
       .getByTestId('main-error').should('not.exist')
 
     FormHelper.testUrl('/')
-    FormHelper.testLocalStorageItem('access-token', accessToken)
+    FormHelper.testLocalStorageItem('account', JSON.stringify(account))
   })
 
   it('Should present UnexpectedError on any error code', () => {

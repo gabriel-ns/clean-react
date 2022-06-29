@@ -5,6 +5,6 @@ export const mockInvalidCredentialsError = (): void => Helper.mockInvalidCredent
 
 export const mockUnexpectedError = (): void => Helper.mockUnexpectedError(/signup/, 'POST')
 
-export const mockOk = (response?: any): void => Helper.mockOk(/signup/, 'POST', response || { accessToken: faker.datatype.uuid() })
+export const mockOk = (response?: any): void => Helper.mockOk(/signup/, 'POST', response || { accessToken: faker.datatype.uuid(), name: faker.name.findName() })
 
 export const mockEmailInUseError = (): void => Helper.mockForbiddenError(/signup/, 'POST')
