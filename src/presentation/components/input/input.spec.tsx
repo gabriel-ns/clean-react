@@ -1,7 +1,7 @@
 import React from 'react'
 import { fireEvent, render, RenderResult } from '@testing-library/react'
 import Input from './input'
-import Context from '@/presentation/components/contexts/form-context'
+import Context from '@/presentation/contexts/form-context'
 import faker from 'faker'
 
 const makeSut = (fieldName = faker.database.column()): RenderResult => {
