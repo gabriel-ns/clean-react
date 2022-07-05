@@ -4,7 +4,7 @@ import { createMemoryHistory, MemoryHistory } from 'history'
 import { Login } from '@/presentation/pages'
 import faker from 'faker'
 import { ApiContext } from '@/presentation/contexts'
-import { render, fireEvent, cleanup, waitFor, screen } from '@testing-library/react'
+import { render, fireEvent, waitFor, screen } from '@testing-library/react'
 import { ValidationStub, AuthenticationSpy, Helper } from '@/presentation/test/'
 import { InvalidCredentialsError } from '@/domain/errors'
 import { act } from 'react-dom/test-utils'
@@ -55,8 +55,6 @@ const simulateValidSubmit = async (email = faker.internet.email(), password = fa
 }
 
 describe('Login Component', () => {
-  afterEach(cleanup)
-
   test('Should not render spinner and error on start', () => {
     makeSut()
     Helper.testChildCount('error-wrap', 0)

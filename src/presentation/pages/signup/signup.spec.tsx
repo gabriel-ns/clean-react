@@ -1,5 +1,5 @@
 
-import { cleanup, fireEvent, render, waitFor, screen } from '@testing-library/react'
+import { fireEvent, render, waitFor, screen } from '@testing-library/react'
 import { createMemoryHistory, MemoryHistory } from 'history'
 import React from 'react'
 import { Router } from 'react-router-dom'
@@ -59,8 +59,6 @@ const simulateValidSubmit = async (name = faker.name.findName(), email = faker.i
 }
 
 describe('Signup Component', () => {
-  afterEach(cleanup)
-
   test('Should not render spinner and error on start', () => {
     makeSut()
     Helper.testChildCount('error-wrap', 0)
