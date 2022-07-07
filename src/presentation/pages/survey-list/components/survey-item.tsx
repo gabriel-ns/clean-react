@@ -13,7 +13,9 @@ const SurveyItem: React.FC<Props> = ({ survey }) => {
     <div className={Styles.surveyContent}>
       <Icon iconName={survey.didAnswer ? IconName.thumbUp : IconName.thumbDown} className={Styles.iconWrap}/>
       <time>
-        <span data-testid="day" className={Styles.day}>{survey.date.getDate()}</span>
+        <span data-testid="day" className={Styles.day}>
+          { survey.date.getDate().toString().padStart(2, '0') }
+        </span>
         <span data-testid="month" className={Styles.month}>
           {survey.date.toLocaleDateString('pt-BR', { month: 'short' }).replace('.','')}
         </span>
