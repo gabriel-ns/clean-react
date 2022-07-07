@@ -13,4 +13,4 @@ export const mockSurveyModel = (): SurveyModel => ({
   didAnswer: false
 })
 
-export const mockSurveyModelList = (): SurveyModel[] => ([mockSurveyModel()])
+export const mockSurveyModelList = (): SurveyModel[] => ([mockSurveyModel(), mockSurveyModel(), mockSurveyModel()])
