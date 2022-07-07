@@ -17,8 +17,8 @@ const SurveyItem: React.FC<Props> = ({ survey }) => {
         <span className={Styles.month}>12</span>
         <span className={Styles.year}>2022</span>
       </time>
-      <p>
-        Lorem ipsum dolor sit amet?
+      <p data-testid="question">
+        { survey.question }
       </p>
     </div>
     <footer>Ver resultado</footer>
