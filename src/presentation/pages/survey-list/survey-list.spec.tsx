@@ -5,6 +5,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import { mockSurveyModelList } from '@/domain/test'
 import React from 'react'
 import { act } from 'react-dom/test-utils'
+import { UnexpectedError } from '@/domain/errors'
 
 class LoadSurveyListSpy implements LoadSurveyList {
   callsCount = 0
@@ -19,8 +20,7 @@ type SutTypes = {
   loadSurveyListSpy: LoadSurveyListSpy
 }
 
-const makeSut = (): SutTypes => {
-  const loadSurveyListSpy = new LoadSurveyListSpy()
+const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {
   render(<SurveyList loadSurveyList={loadSurveyListSpy} />)
   return {
     loadSurveyListSpy
@@ -33,6 +33,7 @@ describe('SurveyList Component', () => {
     const surveyList = screen.getByTestId('survey-list')
     expect(surveyList.querySelectorAll('li:empty')).toHaveLength(4)
     expect(surveyList.children).toHaveLength(4)
+    expect(screen.queryByTestId('error')).not.toBeInTheDocument()
     await act(async () => {
       await waitFor(() => surveyList)
     })
@@ -53,5 +54,20 @@ describe('SurveyList Component', () => {
       await waitFor(() => surveyList)
     })
     expect(surveyList.querySelectorAll('li.surveyItemWrap')).toHaveLength(3)
+    expect(screen.queryByTestId('error')).not.toBeInTheDocument()
+  })
+
+  test('Should render error if LoadSurveyList throws', async () => {
+    const loadSurveyListSpy = new LoadSurveyListSpy()
+    const error = new UnexpectedError()
+    jest.spyOn(loadSurveyListSpy, 'loadAll').mockRejectedValueOnce(error)
+
+    makeSut(loadSurveyListSpy)
+
+    await act(async () => {
+      await waitFor(() => screen.getByRole('heading'))
+    })
+    expect(screen.queryByTestId('survey-list')).not.toBeInTheDocument()
+    expect(screen.getByTestId('error')).toHaveTextContent(error.message)
   })
 })
