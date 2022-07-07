@@ -18,4 +18,10 @@ describe('SurveyItem component', () => {
     render(<SurveyItem survey={ survey }/>)
     expect(screen.getByTestId('icon')).toHaveProperty('src', IconName.thumbDown)
   })
+
+  test('Should render with correct question', () => {
+    const survey = mockSurveyModel()
+    render(<SurveyItem survey={ survey }/>)
+    expect(screen.getByTestId('question')).toHaveTextContent(survey.question)
+  })
 })
