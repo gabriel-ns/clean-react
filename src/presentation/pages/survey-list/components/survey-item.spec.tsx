@@ -24,4 +24,13 @@ describe('SurveyItem component', () => {
     render(<SurveyItem survey={ survey }/>)
     expect(screen.getByTestId('question')).toHaveTextContent(survey.question)
   })
+
+  test('Should render with correct date', () => {
+    const survey = mockSurveyModel()
+    survey.date = new Date('2022-06-30T12:00:00.000000-03:00')
+    render(<SurveyItem survey={ survey }/>)
+    expect(screen.getByTestId('day')).toHaveTextContent('30')
+    expect(screen.getByTestId('month')).toHaveTextContent('jun')
+    expect(screen.getByTestId('year')).toHaveTextContent('2022')
+  })
 })
